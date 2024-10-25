@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@radix-ui/themes";
+import { Button } from "@/app/components/ui_comp/button";
 import { FaCheckCircle } from "react-icons/fa";
 
 export default function Home() {
