@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/app/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 import Navbar from "./navbar";
 
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "Donut",
+  title: "LiquidDex",
 };
 export default function RootLayout({
   children,
@@ -20,8 +19,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Theme>
-
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -33,7 +30,6 @@ export default function RootLayout({
               {children}
             </main>
           </ThemeProvider>
-          </Theme>
         </Providers>
       </body>
     </html>

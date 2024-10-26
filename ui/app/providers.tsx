@@ -3,7 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode } from "react";
 import { WagmiProvider } from "wagmi";
-import { EthersExtension } from "@dynamic-labs/ethers-v5";
+// import { EthersExtension } from "@dynamic-labs/ethers-v5";
 import { config } from "@/lib/wagmi-config";
 import {
   DynamicContextProvider,
@@ -21,9 +21,9 @@ export function Providers(props: { children: ReactNode }) {
     <DynamicContextProvider
       settings={{
         environmentId: "f53767b2-81bb-4f32-9aea-98d71b5acc33",
+        //@ts-expect-error Ethereum Wallet Connector error
         walletConnectors: [EthereumWalletConnectors],
         overrides: { evmNetworks },
-        walletConnectorExtensions: [EthersExtension],
       }}
     >
       <WagmiProvider config={config}>

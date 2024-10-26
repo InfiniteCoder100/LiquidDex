@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/app/components/ui_comp/button";
+import { Button } from "@/app/components/ui/button";
 import { FaCheckCircle } from "react-icons/fa";
 
 export default function Home() {
