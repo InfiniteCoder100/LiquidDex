@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/app/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 import Navbar from "./navbar";
 
+
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
             <main className="w-full max-w-[800px]  flex flex-col  items-center mx-auto">
               {children}
             </main>
+     
           </ThemeProvider>
         </Providers>
       </body>
