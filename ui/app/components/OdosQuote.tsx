@@ -27,7 +27,7 @@ const OdosQuote = () => {
           proportion: 1,
         },
       ],
-      userAddr: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // Replace with actual user address
+      userAddr: '0x49f51e3C94B459677c3B1e611DB3E44d4E6b1D55', // Replace with actual user address
       slippageLimitPercent: 1, // 1% slippage tolerance
       referralCode: 0,
       disableRFQs: true,
@@ -60,7 +60,7 @@ const OdosQuote = () => {
     
     const assembleUrl = 'https://api.odos.xyz/sor/assemble';
     const assembleRequestBody = {
-      userAddr: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // Replace with actual user address
+      userAddr: '0x49f51e3C94B459677c3B1e611DB3E44d4E6b1D55', // Replace with actual user address
       pathId: quoteResponse.pathId,
       simulate: true,
     };
@@ -76,6 +76,8 @@ const OdosQuote = () => {
         const assembled = await response.json();
         setAssembledTransaction(assembled);
         setError(null);
+        console.log("success")
+        console.log(assembled)
       } else {
         setError('Failed to assemble transaction');
       }
@@ -87,14 +89,27 @@ const OdosQuote = () => {
 
   const sendTransaction = async () => {
     if (!assembledTransaction) return;
-
-    const web3 = new Web3('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'); 
-    const transaction = assembledTransaction.transaction;
-
+  
+    const web3 = new Web3('https://mainnet.infura.io/v3/');
+    let transaction = assembledTransaction.transaction;
+  
+    // Log the transaction object
+    console.log("Transaction Object:", transaction);
+  
+    // If gas is -1, set it to the gas estimate value
+    if (transaction.gas <= 0) {
+      transaction.gas = 212960; // Use the valid gas estimate
+    }
+  
+    // Get the gas price if not provided or invalid
+    if (!transaction.gasPrice || parseInt(transaction.gasPrice) <= 0) {
+      transaction.gasPrice = await web3.eth.getGasPrice();
+    }
+  
     try {
-      const pk = 'YOUR_PRIVATE_KEY_HERE';  
+      const pk = 'PRIVATE_KEY_FOR_NOW';  
       const signedTx = await web3.eth.accounts.signTransaction(transaction, pk);
-
+  
       if (signedTx && signedTx.rawTransaction) {
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
         console.log('Transaction receipt:', receipt);
@@ -105,6 +120,7 @@ const OdosQuote = () => {
       console.error('Error in sending transaction:', error);
     }
   };
+  
 
   return (
     <div className="container mx-auto p-6 max-w-lg">
